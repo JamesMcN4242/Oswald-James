@@ -37,5 +37,14 @@ namespace PersonalFramework
                 }
             }
         }
+
+        public void FixedUpdateStack()
+        {
+            if (m_stateStack.Count > 0)
+            {
+                FlowStateBase state = m_stateStack.Peek();
+                state.FixedUpdateState();
+            }
+        }
     }
 }

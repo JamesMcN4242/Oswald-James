@@ -58,6 +58,24 @@ namespace PersonalFramework
             }
         }
 
+        public void FixedUpdateState()
+        {
+            switch (m_status)
+            {
+                case Status.PRESENTING:
+                    FixedUpdatePresenting();
+                    break;
+
+                case Status.ACTIVE:
+                    FixedUpdateActiveState();
+                    break;
+
+                case Status.DISMISSING:
+                    FixedDismissingState();
+                    break;
+            }
+        }
+
         protected virtual void HandleMessage(object message)
         {
         }
@@ -129,7 +147,6 @@ namespace PersonalFramework
             EndDismissingState();
         }
 
-
         protected void EndPresentingState()
         {
             m_status = Status.START_ACTIVE;
@@ -173,6 +190,18 @@ namespace PersonalFramework
                     objs[i].AddObserver(m_messageObserver);
                 }
             }
+        }
+
+        protected virtual void FixedUpdatePresenting()
+        {
+        }
+
+        protected virtual void FixedUpdateActiveState()
+        {
+        }
+
+        protected virtual void FixedDismissingState()
+        {
         }
     }
 }
