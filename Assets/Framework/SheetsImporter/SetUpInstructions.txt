@@ -1,0 +1,8 @@
+In order to use the SheetsImporter the following steps must be completed:
+- Inside this folder (Assets/Framework/SheetsImporter) you must create a new Directory named "Credentials".
+- Navigate into your newly created directory
+- Access Google Sheets .NET API documentation's quick start page (https://developers.google.com/sheets/api/quickstart/dotnet)
+- Click the button entitled "Enable the Google Sheets API" and complete the dialogues that appear
+- Download your credentials file and place it into the your new directory (Assets/Framework/SheetsImporter/Credentials)
+- Ensure the name is "credentials.json"
+- Attempt to pull data from the spreadsheet, a browser will popup with a warning saying the app is unverified, accept this "risk" since you're the developer of said app
