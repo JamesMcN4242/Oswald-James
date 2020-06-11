@@ -29,7 +29,7 @@ namespace SheetsImporter
                 };
 
                 GoogleSheet values = GrabSheetData(sheetInfo);
-                string[] jsonArray = values.ToJsonRowArrays();
+                string[] jsonArray = values.ToJsonRowArrays(GoogleSheet.HeadingAttributes.MEMBER_VARIABLE | GoogleSheet.HeadingAttributes.CAMEL_CASE);
                 for (int i = 0; i < jsonArray.Length; i++)
                 {
                     T scriptableExample = ScriptableObject.CreateInstance<T>();
