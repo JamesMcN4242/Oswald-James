@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "EquipableData", menuName = "ScriptableData/EquipableData", order = 0)]
 public class EquipableData : ScriptableObject
 {
     public string m_weaponName = null;

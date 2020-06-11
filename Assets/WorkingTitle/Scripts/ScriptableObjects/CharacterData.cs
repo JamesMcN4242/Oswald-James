@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "CharacterData", menuName = "ScriptableData/CharacterData", order = 0)]
 public class CharacterData : ScriptableObject
 {
     public string m_className = null;
