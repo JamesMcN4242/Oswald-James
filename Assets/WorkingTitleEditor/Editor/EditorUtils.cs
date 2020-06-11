@@ -5,18 +5,40 @@ using static SheetsImporter.DataImportHandlers;
 
 public static class EditorUtils
 {
-    [MenuItem("Data/Character")]
-    public static void PullCharacterData()
+#region Editor Toolbar
+
+    [MenuItem("Data/All Data")]
+    private static void PullAllData()
     {
-        bool succeeded = CreateScriptableObjects<CharacterData>("CharacterData", Path.Combine("Assets", "WorkingTitle", "Resources", "CharacterData", "{0}.asset"));
+        bool success = PullCharacterData();
+        success &= PullEquipableData();
+        SuccessMessage(success);
+    }
+
+    [MenuItem("Data/Character")]
+    public static void PullCharacterDataEditor()
+    {
+        bool succeeded = PullCharacterData();
         SuccessMessage(succeeded);
     }
 
     [MenuItem("Data/Equipable")]
-    public static void PullEquipableData()
+    public static void PullEquipableDataEditor()
     {
-        bool succeeded = CreateScriptableObjects<EquipableData>("EquipableData", Path.Combine("Assets", "WorkingTitle", "Resources", "EquipableData", "{0}.asset"));
+        bool succeeded = PullEquipableData();
         SuccessMessage(succeeded);
+    }
+
+#endregion
+
+    private static bool PullCharacterData()
+    {
+        return CreateScriptableObjects<CharacterData>("CharacterData", Path.Combine("Assets", "WorkingTitle", "Resources", "CharacterData", "{0}.asset"));
+    }
+    
+    private static bool PullEquipableData()
+    {
+        return CreateScriptableObjects<EquipableData>("EquipableData", Path.Combine("Assets", "WorkingTitle", "Resources", "EquipableData", "{0}.asset"));
     }
 
     public static void SuccessMessage(bool succeeded)
