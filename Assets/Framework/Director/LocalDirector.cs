@@ -16,5 +16,10 @@ namespace PersonalFramework
         {
             m_stateController.UpdateStack();
         }
+
+        void FixedUpdate()
+        {
+            m_stateController.FixedUpdateStack();
+        }
     }
 }
