@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8747ca9f469260d4080902c807980493, type: 3}
   m_Name: Long Sword
   m_EditorClassIdentifier: 
-  m_className: 
-  m_health: 0
+  m_weaponName: Long Sword
+  m_health: 32
   m_accuracy: 0
-  m_attackDamage: 0
+  m_attackDamage: 456
   m_defence: 0
   m_speed: 0

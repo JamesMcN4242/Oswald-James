@@ -13,6 +13,11 @@ public class BaseGameState : FlowStateBase
         return m_ui != null;
     }
 
+    protected override void StartPresentingState()
+    {
+        GridSpawner.SpawnGrid(5,5);
+    }
+
     protected override void UpdateActiveState()
     {
         m_timeActive += Time.deltaTime;
