@@ -12,6 +12,7 @@ public static class EditorUtils
     {
         bool success = PullCharacterData();
         success &= PullEquipableData();
+        success &= PullTeamData();
         SuccessMessage(success);
     }
 
@@ -29,6 +30,13 @@ public static class EditorUtils
         SuccessMessage(succeeded);
     }
 
+    [MenuItem("Data/Team Data")]
+    public static void PullTeamDataEditor()
+    {
+        bool succeeded = PullTeamData();
+        SuccessMessage(succeeded);
+    }
+
 #endregion
 
     private static bool PullCharacterData()
@@ -39,6 +47,11 @@ public static class EditorUtils
     private static bool PullEquipableData()
     {
         return CreateScriptableObjects<EquipableData>("EquipableData", Path.Combine("Assets", "WorkingTitle", "Resources", "EquipableData", "{0}.asset"));
+    }
+
+    private static bool PullTeamData()
+    {
+        return CreateScriptableObjects<TeamSettings>("TeamSettings", Path.Combine("Assets", "WorkingTitle", "Resources", "Settings", "{0}.asset"));
     }
 
     public static void SuccessMessage(bool succeeded)

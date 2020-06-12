@@ -4,7 +4,7 @@ using UnityEngine;
 public class BaseGameState : FlowStateBase
 {
     private UIBaseGameState m_baseUI = null;
-    private float m_timeActive = 0.0f;
+    private EntityContainer m_entityContainer = null;
 
     protected override bool AquireUIFromScene()
     {
@@ -13,9 +13,14 @@ public class BaseGameState : FlowStateBase
         return m_ui != null;
     }
 
-    protected override void UpdateActiveState()
+    protected override void StartPresentingState()
     {
-        m_timeActive += Time.deltaTime;
-        m_baseUI.SetTimerText(m_timeActive);
+        TeamSettings teamSettings = Resources.Load<TeamSettings>("Settings/TeamSettings");
+        m_entityContainer = EntityFactory.CreateEntities(teamSettings);
+    }
+    
+    protected override void FixedUpdateActiveState()
+    {
+        Physics.Simulate(Time.fixedDeltaTime);
     }
 }
