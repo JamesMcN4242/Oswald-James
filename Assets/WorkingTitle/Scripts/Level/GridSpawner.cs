@@ -13,7 +13,7 @@ public static class GridSpawner
             spawnPos.x += i * xIncrement;
             for (int j = 0; j < y; ++j)
             {
-                spawnPos.z += j * yIncrement;
+                spawnPos.z += origin + (j * yIncrement);
                 m_gridArray[i,j] = Object.Instantiate(m_tile, spawnPos, Quaternion.identity);
             }
         }
