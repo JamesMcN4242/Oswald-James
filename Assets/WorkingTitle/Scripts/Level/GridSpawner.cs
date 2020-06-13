@@ -2,10 +2,10 @@
 
 public static class GridSpawner
 {
-    public static GameObject[,] SpawnGrid(GridSpawnerSettings gridSpawnerSettings)
+    public static Tile[,] SpawnGrid(GridSpawnerSettings gridSpawnerSettings)
     {
-        GameObject m_tile = Resources.Load<GameObject>("Level/Tile");
-        GameObject[,] m_gridArray = new GameObject[gridSpawnerSettings.m_x,gridSpawnerSettings.m_y];
+        Tile m_tile = Resources.Load<Tile>("Level/Tile");
+        Tile[,] m_gridArray = new Tile[gridSpawnerSettings.m_x,gridSpawnerSettings.m_y];
         Transform m_gridparent = new GameObject("Tiles").transform;
         
         for (int i = 0; i < gridSpawnerSettings.m_x; ++i)

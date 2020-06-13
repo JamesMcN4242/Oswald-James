@@ -5,7 +5,7 @@ public class BaseGameState : FlowStateBase
 {
     private UIBaseGameState m_baseUI = null;
 
-    private GameObject[,] m_gridArray;
+    private Tile[,] m_gridArray;
     private GridSpawnerSettings m_gridSpawnerSettings = new GridSpawnerSettings(5,5);
 
     private Entity[] m_entities = null;
@@ -22,6 +22,7 @@ public class BaseGameState : FlowStateBase
 
     {
        m_gridArray = GridSpawner.SpawnGrid(m_gridSpawnerSettings);
+       m_gridArray = ScenerySpawner.SpawnScenery(m_gridArray);
         TeamSettings teamSettings = Resources.Load<TeamSettings>("Settings/TeamSettings");
         m_entities = EntityFactory.CreateEntities(teamSettings);
     }
