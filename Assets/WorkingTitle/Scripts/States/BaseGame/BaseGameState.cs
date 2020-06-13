@@ -4,6 +4,7 @@ using UnityEngine;
 public class BaseGameState : FlowStateBase
 {
     private UIBaseGameState m_baseUI = null;
+    private GameObject[,] m_gridArray;
     private float m_timeActive = 0.0f;
 
     protected override bool AquireUIFromScene()
@@ -15,7 +16,7 @@ public class BaseGameState : FlowStateBase
 
     protected override void StartPresentingState()
     {
-        GridSpawner.SpawnGrid(5,5);
+       m_gridArray = GridSpawner.SpawnGrid(5,5, new Vector3(0.0f, 0.0f, 0.0f));
     }
 
     protected override void UpdateActiveState()

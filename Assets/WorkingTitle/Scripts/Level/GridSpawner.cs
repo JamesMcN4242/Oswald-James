@@ -1,18 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class GridSpawner
 {
-    public static void SpawnGrid(int x, int y)
+    public static GameObject[,] SpawnGrid(int x, int y, Vector3 origin, float xIncrement = 1.0f, float yIncrement = 1.0f)
     {
         GameObject m_tile = Resources.Load<GameObject>("Level/Tile");
+        GameObject[,] m_gridArray = new GameObject[x,y];
+        
         for (int i = 0; i < x; ++i)
         {
+            Vector3 spawnPos = origin;
+            spawnPos.x += i * xIncrement;
             for (int j = 0; j < y; ++j)
             {
-                Object.Instantiate(m_tile, new Vector3(m_tile.transform.position.x + i, m_tile.transform.position.y, m_tile.transform.position.z + j), Quaternion.identity);
+                spawnPos.z += j * yIncrement;
+                m_gridArray[i,j] = Object.Instantiate(m_tile, spawnPos, Quaternion.identity);
             }
         }
+        return m_gridArray;
     }
 }
