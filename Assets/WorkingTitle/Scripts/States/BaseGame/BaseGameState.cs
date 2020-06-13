@@ -4,8 +4,11 @@ using UnityEngine;
 public class BaseGameState : FlowStateBase
 {
     private UIBaseGameState m_baseUI = null;
+
     private GameObject[,] m_gridArray;
-    private float m_timeActive = 0.0f;
+
+    private Entity[] m_entities = null;
+
 
     protected override bool AquireUIFromScene()
     {
@@ -15,13 +18,15 @@ public class BaseGameState : FlowStateBase
     }
 
     protected override void StartPresentingState()
+
     {
        m_gridArray = GridSpawner.SpawnGrid(5,5, new Vector3(0.0f, 0.0f, 0.0f));
+        TeamSettings teamSettings = Resources.Load<TeamSettings>("Settings/TeamSettings");
+        m_entities = EntityFactory.CreateEntities(teamSettings);
     }
-
-    protected override void UpdateActiveState()
+    
+    protected override void FixedUpdateActiveState()
     {
-        m_timeActive += Time.deltaTime;
-        m_baseUI.SetTimerText(m_timeActive);
+        Physics.Simulate(Time.fixedDeltaTime);
     }
 }
