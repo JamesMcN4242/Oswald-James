@@ -4,7 +4,7 @@ using UnityEngine;
 public class BaseGameState : FlowStateBase
 {
     private UIBaseGameState m_baseUI = null;
-    private EntityContainer m_entityContainer = null;
+    public Entity[] m_entities = null;
 
     protected override bool AquireUIFromScene()
     {
@@ -16,7 +16,7 @@ public class BaseGameState : FlowStateBase
     protected override void StartPresentingState()
     {
         TeamSettings teamSettings = Resources.Load<TeamSettings>("Settings/TeamSettings");
-        m_entityContainer = EntityFactory.CreateEntities(teamSettings);
+        m_entities = EntityFactory.CreateEntities(teamSettings);
     }
     
     protected override void FixedUpdateActiveState()
