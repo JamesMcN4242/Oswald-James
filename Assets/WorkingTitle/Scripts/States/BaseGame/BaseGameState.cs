@@ -4,7 +4,7 @@ using UnityEngine;
 public class BaseGameState : FlowStateBase
 {
     private UIBaseGameState m_baseUI = null;
-    public Entity[] m_entities = null;
+    private Entity[] m_entities = null;
 
     protected override bool AquireUIFromScene()
     {
