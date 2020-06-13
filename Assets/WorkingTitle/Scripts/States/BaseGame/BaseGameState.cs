@@ -6,6 +6,7 @@ public class BaseGameState : FlowStateBase
     private UIBaseGameState m_baseUI = null;
 
     private GameObject[,] m_gridArray;
+    private GridSpawnerSettings m_gridSpawnerSettings = new GridSpawnerSettings(5,5);
 
     private Entity[] m_entities = null;
 
@@ -20,7 +21,7 @@ public class BaseGameState : FlowStateBase
     protected override void StartPresentingState()
 
     {
-       m_gridArray = GridSpawner.SpawnGrid(5,5, new Vector3(0.0f, 0.0f, 0.0f));
+       m_gridArray = GridSpawner.SpawnGrid(m_gridSpawnerSettings);
         TeamSettings teamSettings = Resources.Load<TeamSettings>("Settings/TeamSettings");
         m_entities = EntityFactory.CreateEntities(teamSettings);
     }
