@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273c22fd2eb9f114981b633e2ca9869b, type: 3}
   m_Name: Rogue
   m_EditorClassIdentifier: 
-  m_className: 
-  m_health: 0
-  m_accuracy: 0
-  m_attackDamage: 0
-  m_defence: 0
-  m_speed: 0
+  m_className: Rogue
+  m_health: 100
+  m_accuracy: 200
+  m_attackDamage: 100
+  m_defence: 100
+  m_speed: 8

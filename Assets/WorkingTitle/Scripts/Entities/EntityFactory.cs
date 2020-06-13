@@ -19,13 +19,14 @@ public static class EntityFactory
         EquipableData[] equipables = Resources.LoadAll<EquipableData>("EquipableData/");
         CharacterData[] characters = Resources.LoadAll<CharacterData>("CharacterData/");
 
-        for(int i = 0; i < entities.Length; i++)
+        int halfEntityLength = entities.Length / 2;
+        for (int i = 0; i < entities.Length; i++)
         {
-            Vector3 randStart = new Vector3(Range(0, 3f), 1.0f, Range(0f, 3f));
-            GameObject go = Object.Instantiate(characterPrefab, randStart, quaternion.identity, characterParent);
+            int2 startTile = new int2(i / halfEntityLength, i % halfEntityLength);
+            GameObject go = Object.Instantiate(characterPrefab, new Vector3(startTile.x, 0.0f, startTile.y), quaternion.identity, characterParent);
+            go.name = $"Player{i}";
             CharacterData charData = characters[Range(0, characters.Length)];
             EquipableData equipData = equipables[Range(0, equipables.Length)];
-            int2 startTile = new int2(0, 0);
 
             entities[i] = new Entity(go, charData, equipData, startTile);
         }
