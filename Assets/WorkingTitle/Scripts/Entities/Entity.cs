@@ -23,7 +23,7 @@ public class Entity
     private float m_timeToTravel = 0.0f;
 
     private MovementStatus m_movementStatus = MovementStatus.IDLE;
-
+  
     public bool IsMoving => m_movementStatus == MovementStatus.MOVING;
     public int2 CurrentTile { get; private set; }
 
@@ -81,7 +81,7 @@ public class Entity
 
     private void UpdateMovingStatus(float deltaTime)
     {
-        float travelingTime = math.min(m_timeToTravel, deltaTime);
+        float travelingTime = math.min(m_timeToTravel, deltaTime);      
         m_timeToTravel -= travelingTime;
         if (m_timeToTravel <= 0.0f)
         {

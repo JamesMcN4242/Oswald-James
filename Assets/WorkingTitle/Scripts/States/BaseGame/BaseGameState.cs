@@ -9,6 +9,7 @@ public class BaseGameState : FlowStateBase
     private InputSystem m_inputSystem = null;
     private GameObject[,] m_gridArray = null;
     private Entity[] m_entities = null;
+    private byte m_controlledEntity = byte.MaxValue;
 
     private SelectedGridElement m_selectedGridElement;
     private byte m_controlledEntity = byte.MaxValue;
@@ -68,7 +69,7 @@ public class BaseGameState : FlowStateBase
             }
         }
     }
-
+    
     private void UpdateEntityMovement()
     {
         foreach(Entity entity in m_entities)
