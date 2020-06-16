@@ -5,8 +5,13 @@ using Unity.Mathematics;
 public class BaseGameState : FlowStateBase
 {
     private UIBaseGameState m_baseUI = null;
+
+    private GameObject[,] m_gridArray;
+    private GridSpawnerSettings m_gridSpawnerSettings = new GridSpawnerSettings(5,5);
+
     private Entity[] m_entities = null;
     private byte m_controlledEntity = byte.MaxValue;
+
 
     protected override bool AquireUIFromScene()
     {
@@ -16,7 +21,9 @@ public class BaseGameState : FlowStateBase
     }
 
     protected override void StartPresentingState()
+
     {
+       m_gridArray = GridSpawner.SpawnGrid(m_gridSpawnerSettings);
         TeamSettings teamSettings = Resources.Load<TeamSettings>("Settings/TeamSettings");
         m_entities = EntityFactory.CreateEntities(teamSettings);
         SetControlledEntity(0);
