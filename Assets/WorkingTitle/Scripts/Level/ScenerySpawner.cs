@@ -119,15 +119,11 @@ public class ScenerySpawner
                 {
                     if ((changeDirection % oddOrEven) == 0)
                     {
-                        int newDirection = (int)direction - 1;
-                        if (newDirection < 0) newDirection = (int)Direction.COUNT - 1;
-                        direction = (Direction)newDirection;
+                        direction = (Direction)(((int)direction + (int)Direction.COUNT - 1) % (int)Direction.COUNT);
                     }
                     else
                     {
-                        int newDirection = (int)direction + 1;
-                        if (newDirection >= (int)Direction.COUNT) newDirection = 0;
-                        direction = (Direction)newDirection;
+                        direction = (Direction)(((int)direction + 1) % (int)Direction.COUNT);
                     }
                     changeDirection = 0.00f;
                 }
