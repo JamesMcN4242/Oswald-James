@@ -26,6 +26,7 @@ public class Entity
   
     public bool IsMoving => m_movementStatus == MovementStatus.MOVING;
     public int SpeedStat => (int)m_characterData.m_speed;
+    public float3 WorldPosition => m_transform.position;
     public int2 CurrentTile { get; private set; }
 
     public Entity(GameObject go, CharacterData charData, EquipableData equipableData, int2 startingTile)

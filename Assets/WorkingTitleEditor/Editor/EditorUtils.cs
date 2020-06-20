@@ -13,6 +13,7 @@ public static class EditorUtils
         bool success = PullCharacterData();
         success &= PullEquipableData();
         success &= PullTeamData();
+        success &= PullCameraSettings();
         SuccessMessage(success);
     }
 
@@ -37,6 +38,13 @@ public static class EditorUtils
         SuccessMessage(succeeded);
     }
 
+    [MenuItem("Data/Camera Settings")]
+    public static void PullCameraSettingsEditor()
+    {
+        bool succeeded = PullCameraSettings();
+        SuccessMessage(succeeded);
+    }
+
 #endregion
 
     private static bool PullCharacterData()
@@ -52,6 +60,11 @@ public static class EditorUtils
     private static bool PullTeamData()
     {
         return CreateScriptableObjects<TeamSettings>("TeamSettings", Path.Combine("Assets", "WorkingTitle", "Resources", "Settings", "{0}.asset"));
+    }
+
+    private static bool PullCameraSettings()
+    {
+        return CreateScriptableObjects<CameraSettings>("CameraSettings", Path.Combine("Assets", "WorkingTitle", "Resources", "Settings", "{0}.asset"));
     }
 
     public static void SuccessMessage(bool succeeded)
