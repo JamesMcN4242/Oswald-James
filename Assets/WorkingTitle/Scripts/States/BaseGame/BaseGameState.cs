@@ -33,7 +33,7 @@ public class BaseGameState : FlowStateBase
 
         GridSpawnerSettings gridSpawnerSettings = new GridSpawnerSettings(50, 50);
         m_gridArray = GridSpawner.SpawnGrid(gridSpawnerSettings);
-        m_gridArray = ScenerySpawner.SpawnScenery(m_gridArray, gridSpawnerSettings);
+        ScenerySpawner.SpawnScenery(m_gridArray, gridSpawnerSettings);
 
         TeamSettings teamSettings = Resources.Load<TeamSettings>("Settings/TeamSettings");
         float yPlayerStart = m_gridArray[0, 0].GetComponent<MeshRenderer>().bounds.size.y + gridSpawnerSettings.m_origin.y;

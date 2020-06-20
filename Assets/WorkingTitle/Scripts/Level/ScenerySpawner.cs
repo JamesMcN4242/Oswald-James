@@ -7,27 +7,49 @@ public class ScenerySpawner
     private enum Direction
     {
         UP,
+        RIGHT,
         DOWN,
         LEFT,
-        RIGHT
+        COUNT
     }
-    public static Tile[,] SpawnScenery(Tile[,] gridArray, GridSpawnerSettings gridSpawnerSettings)
+    public static void SpawnScenery(Tile[,] gridArray, GridSpawnerSettings gridSpawnerSettings)
     {
         List<Unity.Mathematics.int2> generationCoords = new List<Unity.Mathematics.int2>();
+        const float chanceOfNoWall = 0.9f;
         for (int i = 0; i < gridSpawnerSettings.m_x; ++i)
         {
-            for (int j = 0; j < gridSpawnerSettings.m_y; ++j)
-            {
-                if (i == 0 || (i == gridSpawnerSettings.m_x - 1) || j == 0 || j == (gridSpawnerSettings.m_y - 1))
-                {
-                    gridArray[i,j].m_isPassable = false;
-                    gridArray[i,j].m_tileType = Tile.TileType.WALL;
+            gridArray[i,0].m_isPassable = false;
+            gridArray[i,0].m_tileType = Tile.TileType.WALL;
 
-                    if (Random.value > 0.9f)
-                    {
-                        generationCoords.Add(new Unity.Mathematics.int2(i,j));
-                    }
-                }
+            if (Random.value > chanceOfNoWall)
+            {
+                generationCoords.Add(new Unity.Mathematics.int2(i,0));
+            }
+
+            gridArray[i,(gridSpawnerSettings.m_y - 1)].m_isPassable = false;
+            gridArray[i,(gridSpawnerSettings.m_y - 1)].m_tileType = Tile.TileType.WALL;
+
+            if (Random.value > chanceOfNoWall)
+            {
+                generationCoords.Add(new Unity.Mathematics.int2(i,(gridSpawnerSettings.m_y - 1)));
+            }
+        }
+        for (int i = 0; i < gridSpawnerSettings.m_y; ++i)
+        {
+            gridArray[0,i].m_isPassable = false;
+            gridArray[0,i].m_tileType = Tile.TileType.WALL;
+
+            if (Random.value > chanceOfNoWall)
+            {
+                generationCoords.Add(new Unity.Mathematics.int2(0,i));
+            }
+
+            gridArray[(gridSpawnerSettings.m_x - 1),i].m_isPassable = false;
+            gridArray[(gridSpawnerSettings.m_x - 1),i].m_tileType = Tile.TileType.WALL;
+
+            if (Random.value > chanceOfNoWall)
+            {
+                generationCoords.Add(new Unity.Mathematics.int2((gridSpawnerSettings.m_x - 1),i));
             }
         }
         foreach (Unity.Mathematics.int2 currentCoords in generationCoords)
@@ -35,12 +57,14 @@ public class ScenerySpawner
             GenerateWall(gridArray, currentCoords.x, currentCoords.y);
         }
 
-        return gridArray;
+        return;
     }
 
-    private static Tile[,] GenerateWall(Tile[,] gridArray, int x, int y)
+    private static void GenerateWall(Tile[,] gridArray, int x, int y)
     {
         Direction direction = Direction.UP;
+        const float increment = 0.05f;
+        const float oddOrEven = 0.02f;
         float changeDirection = 0.00f;
         float doorChance = 0.00f;
         bool isComplete = false;
@@ -94,49 +118,23 @@ public class ScenerySpawner
 
                 if (changeDirection > Random.value)
                 {
-                    if ((changeDirection % 0.02f) == 0)
+                    if ((changeDirection % oddOrEven) == 0)
                     {
-                        if (direction == Direction.UP)
-                        {
-                            direction = Direction.LEFT;
-                        }
-                        else if (direction == Direction.DOWN)
-                        {
-                            direction = Direction.RIGHT;
-                        }
-                        else if (direction == Direction.LEFT)
-                        {
-                            direction = Direction.DOWN;
-                        }
-                        else if (direction == Direction.RIGHT)
-                        {
-                            direction = Direction.UP;
-                        }
+                        int newDirection = (int)direction - 1;
+                        if (newDirection < 0) newDirection = (int)Direction.COUNT - 1;
+                        direction = (Direction)newDirection;
                     }
                     else
                     {
-                        if (direction == Direction.UP)
-                        {
-                            direction = Direction.RIGHT;
-                        }
-                        else if (direction == Direction.DOWN)
-                        {
-                            direction = Direction.LEFT;
-                        }
-                        else if (direction == Direction.LEFT)
-                        {
-                            direction = Direction.UP;
-                        }
-                        else if (direction == Direction.RIGHT)
-                        {
-                            direction = Direction.DOWN;
-                        }
+                        int newDirection = (int)direction + 1;
+                        if (newDirection >= (int)Direction.COUNT) newDirection = 0;
+                        direction = (Direction)newDirection;
                     }
                     changeDirection = 0.00f;
                 }
                 else
                 {
-                    changeDirection += 0.05f;
+                    changeDirection += increment;
                 }
 
                 if (doorChance > Random.value)
@@ -147,12 +145,12 @@ public class ScenerySpawner
                 }
                 else
                 {
-                    doorChance += 0.05f;
+                    doorChance += increment;
                 }
             }
         }
 
-        return gridArray;
+        return;
 
     }
 }
