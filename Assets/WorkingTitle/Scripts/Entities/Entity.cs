@@ -23,6 +23,10 @@ public class Entity
     private float m_timeToTravel = 0.0f;
 
     private MovementStatus m_movementStatus = MovementStatus.IDLE;
+  
+    public bool IsMoving => m_movementStatus == MovementStatus.MOVING;
+    public int SpeedStat => (int)m_characterData.m_speed;
+    public float3 WorldPosition => m_transform.position;
     public int2 CurrentTile { get; private set; }
 
     public Entity(GameObject go, CharacterData charData, EquipableData equipableData, int2 startingTile)
@@ -79,16 +83,20 @@ public class Entity
 
     private void UpdateMovingStatus(float deltaTime)
     {
-        float travelingTime = math.min(m_timeToTravel, deltaTime);
-        float3 direction = (new Vector3(CurrentTile.x, 0f, CurrentTile.y) - m_transform.position).normalized;
-        float3 movement = direction * k_movementSpeed * travelingTime;
-        float3 newPosition = movement + (float3)m_transform.position;
-
-        m_transform.position = newPosition;
+        float travelingTime = math.min(m_timeToTravel, deltaTime);      
         m_timeToTravel -= travelingTime;
         if (m_timeToTravel <= 0.0f)
         {
             m_movementStatus = MovementStatus.IDLE;
+            m_transform.position = new Vector3(CurrentTile.x, m_transform.position.y, CurrentTile.y);
+        }
+        else
+        {
+            float3 direction = (new Vector3(CurrentTile.x, 0f, CurrentTile.y) - m_transform.position).normalized;
+            float3 movement = direction * k_movementSpeed * travelingTime;
+            float3 newPosition = movement + (float3)m_transform.position;
+            newPosition.y = m_transform.position.y;
+            m_transform.position = newPosition;
         }
     }
 }
