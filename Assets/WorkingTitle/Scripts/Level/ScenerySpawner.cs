@@ -57,7 +57,6 @@ public class ScenerySpawner
             GenerateWall(gridArray, currentCoords.x, currentCoords.y);
         }
 
-        return;
     }
 
     private static void GenerateWall(Tile[,] gridArray, int x, int y)
@@ -149,8 +148,6 @@ public class ScenerySpawner
                 }
             }
         }
-
-        return;
 
     }
 }
