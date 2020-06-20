@@ -8,9 +8,11 @@ public class BaseGameState : FlowStateBase
 {
     private UIBaseGameState m_baseUI = null;
 
+
+    private Tile[,] m_gridArray;
     private InputSystem m_inputSystem = null;
     private CameraSystem m_cameraSystem = null;
-    private GameObject[,] m_gridArray = null;
+
     private Entity[] m_entities = null;
 
     private SelectedGridElement m_selectedGridElement;
@@ -31,6 +33,7 @@ public class BaseGameState : FlowStateBase
 
         GridSpawnerSettings gridSpawnerSettings = new GridSpawnerSettings(50, 50);
         m_gridArray = GridSpawner.SpawnGrid(gridSpawnerSettings);
+        ScenerySpawner.SpawnScenery(m_gridArray, gridSpawnerSettings);
 
         TeamSettings teamSettings = Resources.Load<TeamSettings>("Settings/TeamSettings");
         float yPlayerStart = m_gridArray[0, 0].GetComponent<MeshRenderer>().bounds.size.y + gridSpawnerSettings.m_origin.y;
