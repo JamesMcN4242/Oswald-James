@@ -72,15 +72,15 @@ public class ScenerySpawner
         {
             direction = Direction.RIGHT;
         }
-        if (x == gridArray.GetUpperBound(0))
+        else if (x == gridArray.GetUpperBound(0))
         {
             direction = Direction.LEFT;
         }
-        if (y == 0)
+        else if (y == 0)
         {
             direction = Direction.UP;
         }
-        if (y == gridArray.GetUpperBound(1))
+        else if (y == gridArray.GetUpperBound(1))
         {
             direction = Direction.DOWN;
         }
