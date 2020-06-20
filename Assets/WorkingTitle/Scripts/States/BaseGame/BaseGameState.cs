@@ -2,6 +2,8 @@
 using UnityEngine;
 using Unity.Mathematics;
 
+using Random = UnityEngine.Random;
+
 public class BaseGameState : FlowStateBase
 {
     private UIBaseGameState m_baseUI = null;
@@ -12,6 +14,7 @@ public class BaseGameState : FlowStateBase
 
     private SelectedGridElement m_selectedGridElement;
     private byte m_controlledEntity = byte.MaxValue;
+    private bool m_playerTurn = true;
 
     protected override bool AquireUIFromScene()
     {
@@ -35,11 +38,28 @@ public class BaseGameState : FlowStateBase
 
     protected override void UpdateActiveState()
     {
-        m_inputSystem.UpdateInput();
-        UpdateSelectedGrid();        
-        UpdateEntityMovement();
+        UpdateTurn();
+    }
 
-        UpdateDebugControlledEntity();
+    private void UpdateTurn()
+    {
+        if (m_playerTurn)
+        {
+            m_inputSystem.UpdateInput();
+            UpdateSelectedGrid();
+        }
+        else if (!m_entities[m_controlledEntity].IsMoving)
+        {
+            //TODO: Actual AI Logic - currently choosing random square in range - only positive movement
+            int tilesMoveable = m_entities[m_controlledEntity].SpeedStat;
+            int newX = Random.Range(0, tilesMoveable);
+            tilesMoveable -= newX;
+            int newY = Random.Range(0, tilesMoveable);
+            int2 newPos = m_entities[m_controlledEntity].CurrentTile + new int2(newX, newY);
+            m_entities[m_controlledEntity].SetNewPosition(newPos);
+        }
+
+        UpdateEntityMovement();
     }
 
     private void UpdateSelectedGrid()
@@ -71,9 +91,19 @@ public class BaseGameState : FlowStateBase
     
     private void UpdateEntityMovement()
     {
-        foreach(Entity entity in m_entities)
+        Entity movingEntity = m_entities[m_controlledEntity];
+        bool isMoving = movingEntity.IsMoving;
+        movingEntity.UpdateEntityMovement(Time.deltaTime);
+
+        if(isMoving && !movingEntity.IsMoving)
         {
-            entity.UpdateEntityMovement(Time.deltaTime);
+            //Switch to the next character
+            SetControlledEntity((byte)((m_controlledEntity + 1) % m_entities.Length));
+            m_playerTurn = m_controlledEntity < m_entities.Length / 2;
+            if(!m_playerTurn)
+            {
+                SetSelectedGridColour(Color.white);
+            }
         }
     }
 
@@ -88,17 +118,6 @@ public class BaseGameState : FlowStateBase
 
         m_controlledEntity = newEntity;
         m_entities[m_controlledEntity].SetHighlightStatus(true);
-    }
-
-    private void UpdateDebugControlledEntity()
-    {
-        for(byte i = 0; i < m_entities.Length && i <= 9; i++)
-        {
-            if(Input.GetKeyDown((KeyCode)((int)KeyCode.Alpha0 + i)))
-            {
-                SetControlledEntity(i);
-            }
-        }
     }
 
     private void SetSelectedGridColour(Color colour)
