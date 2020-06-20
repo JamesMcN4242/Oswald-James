@@ -9,6 +9,7 @@ public class BaseGameState : FlowStateBase
     private UIBaseGameState m_baseUI = null;
 
     private InputSystem m_inputSystem = null;
+    private CameraSystem m_cameraSystem = null;
     private GameObject[,] m_gridArray = null;
     private Entity[] m_entities = null;
 
@@ -26,6 +27,7 @@ public class BaseGameState : FlowStateBase
     protected override void StartPresentingState()
     {
         m_inputSystem = new InputSystem();
+        m_cameraSystem = new CameraSystem();
 
         GridSpawnerSettings gridSpawnerSettings = new GridSpawnerSettings(50, 50);
         m_gridArray = GridSpawner.SpawnGrid(gridSpawnerSettings);
@@ -39,6 +41,7 @@ public class BaseGameState : FlowStateBase
     protected override void UpdateActiveState()
     {
         UpdateTurn();
+        m_cameraSystem.UpdateCamera(m_entities[m_controlledEntity].WorldPosition, Time.deltaTime);
     }
 
     private void UpdateTurn()
