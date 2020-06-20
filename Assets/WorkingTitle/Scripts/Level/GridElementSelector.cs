@@ -11,20 +11,20 @@ public struct SelectedGridElement
 
 public static class GridElementSelector
 {
-    private static readonly int k_levelLayer = LayerMask.NameToLayer("Map");
+    private static readonly int k_levelMask = LayerMask.GetMask("Map");
 
     public static SelectedGridElement UpdateGridSelection(Tile[,] gridElements, float3 mousePosition)
     {
         SelectedGridElement selectedGridElement = new SelectedGridElement { m_selected = false, m_arrayPos = new int2(int.MinValue)};
         
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit, k_levelMask))
         {
             for(int i = 0, firstDimension = gridElements.GetLength(0); i < firstDimension; i++)
             {
                 for(int j = 0, secondDimension = gridElements.GetLength(1); j < secondDimension; j++)
                 {
-                    if(hit.collider.gameObject == gridElements[i,j])
+                    if(hit.collider.gameObject == gridElements[i,j].gameObject)
                     {
                         selectedGridElement.m_arrayPos = new int2(i, j);
                         return selectedGridElement;
