@@ -7,6 +7,7 @@ public struct SelectedGridElement
 
     public bool m_selected;
     public int2 m_arrayPos;
+    public Tile.TileType m_tileType;
 }
 
 public static class GridElementSelector
@@ -27,6 +28,7 @@ public static class GridElementSelector
                     if(hit.collider.gameObject == gridElements[i,j].gameObject)
                     {
                         selectedGridElement.m_arrayPos = new int2(i, j);
+                        selectedGridElement.m_tileType = gridElements[i,j].m_tileType;
                         return selectedGridElement;
                     }
                 }

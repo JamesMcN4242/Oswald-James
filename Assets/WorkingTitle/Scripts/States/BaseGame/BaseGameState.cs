@@ -83,6 +83,10 @@ public class BaseGameState : FlowStateBase
             if (overGridElement)
             {
                 bool entityInRange = m_entities[m_controlledEntity].CanMoveToNewPosition(selected.m_arrayPos);
+                if (selected.m_tileType == Tile.TileType.WALL || selected.m_tileType == Tile.TileType.HALFWALL)
+                {
+                    entityInRange = false;
+                }
                 if (m_inputSystem.ClickComplete && entityInRange)
                 {
                     m_entities[m_controlledEntity].SetNewPosition(selected.m_arrayPos);
