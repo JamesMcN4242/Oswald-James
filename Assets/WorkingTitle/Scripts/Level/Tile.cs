@@ -8,7 +8,8 @@ public class Tile : MonoBehaviour
     {
         FLOOR,
         WALL,
-        DOOR
+        DOOR,
+        HALFWALL
     }
 
     public TileType m_tileType;

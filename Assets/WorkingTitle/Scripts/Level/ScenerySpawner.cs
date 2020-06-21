@@ -64,6 +64,8 @@ public class ScenerySpawner
         Direction direction = Direction.UP;
         const float increment = 0.05f;
         const float oddOrEven = 0.02f;
+        const float halfwallToggleThreshold = 0.9f;
+        bool halfwallToggle = false;
         float changeDirection = 0.00f;
         float doorChance = 0.00f;
         bool isComplete = false;
@@ -112,7 +114,8 @@ public class ScenerySpawner
             }
             else
             {
-                gridArray[x,y].m_tileType = Tile.TileType.WALL;
+                if (halfwallToggle) gridArray[x,y].m_tileType = Tile.TileType.HALFWALL;
+                else gridArray[x,y].m_tileType = Tile.TileType.WALL;
                 gridArray[x,y].m_isPassable = false;
 
                 if (changeDirection > Random.value)
@@ -141,6 +144,11 @@ public class ScenerySpawner
                 else
                 {
                     doorChance += increment;
+                }
+
+                if (Random.value > halfwallToggleThreshold)
+                {
+                    halfwallToggle = !halfwallToggle;
                 }
             }
         }
