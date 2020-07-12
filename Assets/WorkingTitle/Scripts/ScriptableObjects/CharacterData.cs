@@ -8,4 +8,5 @@ public class CharacterData : ScriptableObject
     public float m_attackDamage = 0.0f;
     public float m_defence = 0.0f;
     public float m_speed = 0.0f;
+    public float m_viewDistance = 0.0f;
 }

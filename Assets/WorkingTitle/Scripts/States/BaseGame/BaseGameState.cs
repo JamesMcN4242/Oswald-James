@@ -66,6 +66,7 @@ public class BaseGameState : FlowStateBase
         }
 
         UpdateEntityMovement();
+        UpdateSeenEnemies();
     }
 
     private void UpdateSelectedGrid()
@@ -110,6 +111,25 @@ public class BaseGameState : FlowStateBase
             {
                 SetSelectedGridColour(Color.white);
             }
+        }
+    }
+
+    private void UpdateSeenEnemies()
+    {
+        //TODO: Do this with a shader, or explicitly only update for the singular character moving
+        int teamCount = m_entities.Length / 2;
+        for (int i = teamCount; i < m_entities.Length; i++)
+        {
+            bool renderCharacter = false;
+            for(int j = 0; j < teamCount; j++)
+            {
+                if(math.distance(m_entities[i].WorldPosition, m_entities[j].WorldPosition) <= m_entities[j].ViewDistance)
+                {
+                    renderCharacter = true;
+                    break;
+                }
+            }
+            m_entities[i].ShowEntity(renderCharacter);
         }
     }
 

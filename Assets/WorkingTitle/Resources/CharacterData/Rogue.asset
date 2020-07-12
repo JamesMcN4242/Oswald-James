@@ -18,3 +18,4 @@ MonoBehaviour:
   m_attackDamage: 100
   m_defence: 100
   m_speed: 8
+  m_viewDistance: 3

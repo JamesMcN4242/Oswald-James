@@ -15,6 +15,7 @@ public class Entity
 
     private static readonly Color k_highlightColour = Color.yellow;
     private readonly Color k_startingColour;
+    private readonly Renderer k_entityRenderer;
     private readonly Material k_characterMaterial;
     private readonly Transform m_transform;
 
@@ -27,12 +28,14 @@ public class Entity
     public bool IsMoving => m_movementStatus == MovementStatus.MOVING;
     public int SpeedStat => (int)m_characterData.m_speed;
     public float3 WorldPosition => m_transform.position;
+    public float ViewDistance => m_characterData.m_viewDistance;
     public int2 CurrentTile { get; private set; }
 
     public Entity(GameObject go, CharacterData charData, EquipableData equipableData, int2 startingTile)
     {
         m_transform = go.transform;
-        k_characterMaterial = go.GetComponent<Renderer>().material;
+        k_entityRenderer = go.GetComponent<Renderer>();
+        k_characterMaterial = k_entityRenderer.material;
         k_startingColour = k_characterMaterial.color;
 
         m_characterData = charData;
@@ -75,6 +78,11 @@ public class Entity
         k_characterMaterial.color = highlight ? k_highlightColour : k_startingColour;
     }
     
+    public void ShowEntity(bool showEntity)
+    {
+        k_entityRenderer.enabled = showEntity;
+    }
+
     private int GetMovementDistance(int2 newTile)
     {
         int2 subtractedPositions = math.abs(CurrentTile - newTile);
