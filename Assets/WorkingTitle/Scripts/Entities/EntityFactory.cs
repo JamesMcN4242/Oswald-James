@@ -30,6 +30,13 @@ public static class EntityFactory
             EquipableData equipData = equipables[Range(0, equipables.Length)];
 
             entities[i] = new Entity(go, charData, equipData, startTile);
+
+#if UNITY_EDITOR
+            if(i < halfEntityLength)
+            {
+                go.AddComponent<EntityGizmos>().ViewDistance = charData.m_viewDistance;
+            }
+#endif
         }
     }
 }
